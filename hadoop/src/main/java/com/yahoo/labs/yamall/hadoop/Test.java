@@ -3,6 +3,7 @@
 // Please see LICENSE file in the project root for terms.
 package com.yahoo.labs.yamall.hadoop;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.nio.file.Files;
@@ -74,7 +75,7 @@ public class Test extends Configured implements Tool {
             FileSystem fileSystem = FileSystem.get(modelPath.toUri(), config);
             fileSystem.copyToLocalFile(modelPath, new Path(MODEL_BIN));
 
-            learner = IOLearner.loadLearner(MODEL_BIN);
+            learner = IOLearner.loadLearner(new FileInputStream(MODEL_BIN));
 
             if (config.get("yamall.parser").equals("vw"))
                 parser = new VWParser(Integer.parseInt(config.get("yamall.bit_precision")), config.get("yamall.ignore"),

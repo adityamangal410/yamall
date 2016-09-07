@@ -21,9 +21,11 @@ public class PerCoordinateSOLO implements Learner {
     private Loss lossFnc;
     public double iter = 0;
     private int size_hash = 0;
+    private int numBits;
 
     public PerCoordinateSOLO(
             int bits) {
+        this.numBits = bits;
         size_hash = 1 << bits;
         theta = new double[size_hash];
         sumSqGrads = new double[size_hash];
@@ -97,4 +99,7 @@ public class PerCoordinateSOLO implements Learner {
         w = ((SparseVector) o.readObject()).toDenseVector(size_hash);
     }
 
+    public int getNumBits() {
+        return numBits;
+    }
 }

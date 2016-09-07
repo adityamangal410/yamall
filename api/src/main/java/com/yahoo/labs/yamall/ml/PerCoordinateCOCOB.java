@@ -24,9 +24,11 @@ public class PerCoordinateCOCOB implements Learner {
     private int size_hash = 0;
     private int wCreationStamp = -1;
     private int iter = 0;
+    private int numBits;
 
     public PerCoordinateCOCOB(
             int bits) {
+        this.numBits = bits;
         size_hash = 1 << bits;
         theta = new double[size_hash];
         reward = new double[size_hash];
@@ -152,4 +154,7 @@ public class PerCoordinateCOCOB implements Learner {
         scale = ((SparseVector) o.readObject()).toDenseVector(size_hash);
     }
 
+    public int getNumBits() {
+        return numBits;
+    }
 }

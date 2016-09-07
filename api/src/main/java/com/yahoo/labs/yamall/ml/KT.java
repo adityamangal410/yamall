@@ -19,9 +19,11 @@ public class KT implements Learner {
     private double initialWealth = 1.0;
     private double maxNormGrad = 0.0;
     private int size_hash = 0;
+    private int numBits;
 
     public KT(
             int bits) {
+        this.numBits = bits;
         size_hash = 1 << bits;
         theta = new double[size_hash];
     }
@@ -70,6 +72,10 @@ public class KT implements Learner {
         tmp = tmp + "Initial learning rate = " + initialWealth + "\n";
         tmp = tmp + "Loss function = " + getLoss().toString();
         return tmp;
+    }
+
+    public int getNumBits() {
+        return numBits;
     }
 
     private void writeObject(ObjectOutputStream o) throws IOException {

@@ -40,9 +40,11 @@ public class PerCoordinatePiSTOL implements Learner {
     private int size_hash = 0;
     private int iter = 0;
     private int wCreationStamp = -1;
+    private int numBits;
 
     public PerCoordinatePiSTOL(
             int bits) {
+        this.numBits = bits;
         size_hash = 1 << bits;
         theta = new double[size_hash];
         scale = new double[size_hash];
@@ -145,5 +147,9 @@ public class PerCoordinatePiSTOL implements Learner {
         theta = ((SparseVector) o.readObject()).toDenseVector(size_hash);
         scale = ((SparseVector) o.readObject()).toDenseVector(size_hash);
         sumAbsGradient = ((SparseVector) o.readObject()).toDenseVector(size_hash);
+    }
+
+    public int getNumBits() {
+        return numBits;
     }
 }

@@ -75,4 +75,11 @@ public interface Learner extends Serializable {
      * @return a string describing the algorithm.
      */
     public String toString();
+
+    /**
+     * Returns the number of bits used for the current learner
+     *
+     * @return the number of bits as int.
+     */
+    public int getNumBits();
 }

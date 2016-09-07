@@ -3,13 +3,7 @@
 // Please see LICENSE file in the project root for terms.
 package com.yahoo.labs.yamall.ml;
 
-import java.io.BufferedWriter;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,18 +23,17 @@ public class IOLearner {
      * <p>
      * The type of model is taken from the file.
      * 
-     * @param filename
-     *            name of the file to load.
+     *
+     * @param inputStream Input stream for the model file
+     *
      * @return model.
      */
-    public static Learner loadLearner(String filename) {
+    public static Learner loadLearner(InputStream inputStream) {
         Learner obj = null;
         try {
-            FileInputStream fileIn = new FileInputStream(filename);
-            ObjectInputStream in = new ObjectInputStream(fileIn);
+            ObjectInputStream in = new ObjectInputStream(inputStream);
             obj = (Learner) in.readObject();
             in.close();
-            fileIn.close();
         }
         catch (IOException i) {
             i.printStackTrace();

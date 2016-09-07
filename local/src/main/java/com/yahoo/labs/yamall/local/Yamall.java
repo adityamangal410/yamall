@@ -171,9 +171,6 @@ public class Yamall {
         if (remainingArgs.length == 1)
             inputFile = remainingArgs[0];
 
-        VWParser vwparser = new VWParser(bitsHash, cmd.getOptionValue("ignore"), (invertHashName != null));
-        System.out.println("Num weight bits = " + bitsHash);
-
         // setup progress
         String progress = cmd.getOptionValue("P", "2.0");
         if (progress.indexOf('.') >= 0) {
@@ -218,8 +215,17 @@ public class Yamall {
                 learner = new SGD_VW(bitsHash);
         }
         else {
-            learner = IOLearner.loadLearner(initialModelFile);
+            try {
+                learner = IOLearner.loadLearner(new FileInputStream(initialModelFile));
+                bitsHash = learner.getNumBits();
+            } catch (FileNotFoundException e) {
+                System.out.println("Model file not found");
+                System.exit(0);
+            }
         }
+
+        VWParser vwparser = new VWParser(bitsHash, cmd.getOptionValue("ignore"), (invertHashName != null));
+        System.out.println("Num weight bits = " + bitsHash);
 
         // setup link function
         if (linkName.equals("identity")) {

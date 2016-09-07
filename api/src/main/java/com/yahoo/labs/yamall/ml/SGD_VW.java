@@ -32,9 +32,11 @@ public class SGD_VW implements Learner {
     private Loss lossFnc;
     private double iter = 0;
     private int size_hash = 0;
+    private int numBits;
 
     public SGD_VW(
             int bits) {
+        this.numBits = bits;
         size_hash = 1 << bits;
         w = new double[size_hash];
         s = new double[size_hash];
@@ -132,4 +134,7 @@ public class SGD_VW implements Learner {
         G = ((SparseVector) o.readObject()).toDenseVector(size_hash);
     }
 
+    public int getNumBits() {
+        return numBits;
+    }
 }

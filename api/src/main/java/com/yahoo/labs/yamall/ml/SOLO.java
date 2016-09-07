@@ -26,9 +26,11 @@ public class SOLO implements Learner {
     private double sumSqGrads = 1;
     private Loss lossFnc;
     private int size_hash = 0;
+    private int numBits;
 
     public SOLO(
             int bits) {
+        this.numBits = bits;
         size_hash = 1 << bits;
         theta = new double[size_hash];
     }
@@ -80,5 +82,9 @@ public class SOLO implements Learner {
     private void readObject(ObjectInputStream o) throws IOException, ClassNotFoundException {
         o.defaultReadObject();
         theta = ((SparseVector) o.readObject()).toDenseVector(size_hash);
+    }
+
+    public int getNumBits() {
+        return numBits;
     }
 }

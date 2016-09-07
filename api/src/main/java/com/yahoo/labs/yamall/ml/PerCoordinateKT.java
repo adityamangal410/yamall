@@ -24,9 +24,11 @@ public class PerCoordinateKT implements Learner {
     private int size_hash = 0;
     private int wCreationStamp = -1;
     private int iter = 0;
+    private int numBits;
 
     public PerCoordinateKT(
             int bits) {
+        this.numBits = bits;
         size_hash = 1 << bits;
         theta = new double[size_hash];
         reward = new double[size_hash];
@@ -141,5 +143,9 @@ public class PerCoordinateKT implements Learner {
         theta = ((SparseVector) o.readObject()).toDenseVector(size_hash);
         sumGradientScale = ((SparseVector) o.readObject()).toDenseVector(size_hash);
         scale = ((SparseVector) o.readObject()).toDenseVector(size_hash);
+    }
+
+    public int getNumBits() {
+        return numBits;
     }
 }
