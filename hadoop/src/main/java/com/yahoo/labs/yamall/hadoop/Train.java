@@ -152,13 +152,14 @@ public class Train extends Configured implements Tool {
             // save the model to local file
             IOLearner.saveLearner(learner, MODEL_BIN);
             // move it to HDFS
-            FileSystem fileSystem = FileSystem.get(config);
-            fileSystem.moveFromLocalFile(new Path(MODEL_BIN), new Path(config.get("yamall.output")));
+            Path outputPath = new Path(config.get("yamall.output"));
+            FileSystem fileSystem = FileSystem.get(outputPath.toUri(), config);
+            fileSystem.moveFromLocalFile(new Path(MODEL_BIN), outputPath);
 
             // save the readable model to local file
             IOLearner.saveInvertHash(learner.getWeights(), hm.getEntries(), MODEL_TXT);
             // move it to HDFS
-            fileSystem.moveFromLocalFile(new Path(MODEL_TXT), new Path(config.get("yamall.output")));
+            fileSystem.moveFromLocalFile(new Path(MODEL_TXT), outputPath);
 
             super.cleanup(context);
         }

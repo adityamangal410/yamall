@@ -70,8 +70,9 @@ public class Test extends Configured implements Tool {
             Configuration config = context.getConfiguration();
 
             // move model to the node
-            FileSystem fileSystem = FileSystem.get(config);
-            fileSystem.copyToLocalFile(new Path(config.get("yamall.vw_model")), new Path(MODEL_BIN));
+            Path modelPath = new Path(config.get("yamall.vw_model"));
+            FileSystem fileSystem = FileSystem.get(modelPath.toUri(), config);
+            fileSystem.copyToLocalFile(modelPath, new Path(MODEL_BIN));
 
             learner = IOLearner.loadLearner(MODEL_BIN);
 
